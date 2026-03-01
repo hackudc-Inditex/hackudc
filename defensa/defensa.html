@@ -8,283 +8,469 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #080c14;
-            color: #f8fafc;
+            font-family: 'Outfit', sans-serif;
+            background-color: #09090b;
+            color: #f4f4f5;
             overflow-x: hidden;
         }
 
-        .gradient-text {
-            background: linear-gradient(90deg, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .glass-card {
+            background: rgba(24, 24, 27, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .step-card {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .glass-card:hover {
+            transform: translateY(-4px);
         }
 
-        .step-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(56, 189, 248, 0.4);
-            box-shadow: 0 20px 40px -20px rgba(56, 189, 248, 0.2);
+        .glass-card.card-amber:hover {
+            border-color: rgba(245, 158, 11, 0.3);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06),
+                        0 20px 40px -15px rgba(245, 158, 11, 0.1);
         }
 
-        .timeline-line {
-            background: linear-gradient(to bottom, #38bdf8, #818cf8, #ec4899);
+        .glass-card.card-rose:hover {
+            border-color: rgba(244, 63, 94, 0.3);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06),
+                        0 20px 40px -15px rgba(244, 63, 94, 0.1);
+        }
+
+        .glass-card.card-teal:hover {
+            border-color: rgba(20, 184, 166, 0.3);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06),
+                        0 20px 40px -15px rgba(20, 184, 166, 0.1);
+        }
+
+        .glass-card.card-emerald:hover {
+            border-color: rgba(16, 185, 129, 0.3);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06),
+                        0 20px 40px -15px rgba(16, 185, 129, 0.1);
+        }
+
+        .glass-card.card-fuchsia:hover {
+            border-color: rgba(217, 70, 239, 0.25);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06),
+                        0 20px 40px -15px rgba(217, 70, 239, 0.1);
         }
 
         .url-display {
-            background: #020617;
-            border-left: 4px solid #38bdf8;
-            font-family: 'Fira Code', monospace;
+            background: rgba(9, 9, 11, 0.7);
+            border-left: 3px solid #f59e0b;
+            font-family: 'Courier New', monospace;
         }
 
         .highlight-amber {
-            color: #fbbf24;
+            color: #f59e0b;
             font-weight: 800;
-            border-bottom: 3px solid #fbbf24;
-            padding: 0 4px;
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            padding: 0 3px;
         }
 
-        .img-placeholder {
-            background: linear-gradient(45deg, #1e293b, #0f172a);
-            border: 1px dashed rgba(56, 189, 248, 0.3);
+        .badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
         }
+
+        .badge-logic {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            color: #fbbf24;
+        }
+
+        .badge-vision {
+            background: rgba(20, 184, 166, 0.1);
+            border: 1px solid rgba(20, 184, 166, 0.25);
+            color: #5eead4;
+        }
+
+        .timeline-line {
+            background: rgba(63, 63, 70, 0.5);
+        }
+
+        .phase-dot {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .phase-dot:hover {
+            transform: scale(1.1);
+        }
+
+        .signal-row {
+            transition: background 0.2s ease;
+        }
+        .signal-row:hover {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+        }
+
+        .stat-block {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .stat-block:hover {
+            transform: scale(0.98);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .fade-in-1 { animation-delay: 0.1s; }
+        .fade-in-2 { animation-delay: 0.25s; }
+        .fade-in-3 { animation-delay: 0.4s; }
+        .fade-in-4 { animation-delay: 0.55s; }
+        .fade-in-5 { animation-delay: 0.7s; }
+        .fade-in-6 { animation-delay: 0.85s; }
 
         @keyframes pulse-soft {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.7;
-            }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
-
-        .animate-pulse-soft {
-            animation: pulse-soft 3s infinite;
-        }
+        .animate-pulse-soft { animation: pulse-soft 3s infinite; }
     </style>
 </head>
 
 <body class="p-4 md:p-12">
 
     <div class="max-w-5xl mx-auto">
-        <!-- Cabecera -->
-        <header class="text-center mb-20">
-            <h1 class="text-6xl md:text-8xl font-black mb-6 tracking-tighter italic">
-                Hackathon InditexTech<span class="gradient-text"> Los Pingüinos</span>
+
+        <!-- Cabecera — left-aligned, asymmetric -->
+        <header class="mb-24 md:pl-[8vw] fade-in fade-in-1">
+            <div class="inline-block mb-5 badge badge-logic">
+                HackUDC · InditexTech 2026
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black mb-5 tracking-tighter">
+                Los<span class="text-amber-500"> Pingüinos</span>
             </h1>
-            <p class="text-slate-400 text-xl max-w-3xl mx-auto font-light leading-relaxed">
-                Superando límites computacionales mediante ingeniería inversa y estrategias creativas de Machine
-                Learning.
+            <p class="text-zinc-500 text-lg max-w-[55ch] leading-relaxed">
+                Identificación de productos Zara en imágenes de looks completos.<br>
+                <span class="text-amber-500 font-semibold">resultado final de 45.01%</span>
             </p>
         </header>
 
-        <!-- Contenedor del Timeline -->
-        <div class="relative">
-            <!-- Línea Central -->
-            <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] timeline-line opacity-30 -translate-x-1/2">
-            </div>
 
-            <!-- FASE 1: INGENIERÍA INVERSA (URLs Completas) -->
-            <div class="relative flex flex-col md:flex-row items-center mb-24 group">
+
+        <!-- Timeline -->
+        <div class="relative">
+            <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-px timeline-line -translate-x-1/2"></div>
+
+            <!-- ══════════════════════════════════════════════════ -->
+            <!-- FASE 1: INGENIERÍA INVERSA -->
+            <!-- ══════════════════════════════════════════════════ -->
+            <div class="relative flex flex-col md:flex-row items-center mb-28 group fade-in fade-in-2">
                 <div class="hidden md:block w-1/2 pr-16 text-right">
-                    <h3 class="text-3xl font-bold text-sky-400 mb-2 italic uppercase tracking-tighter">Fase 01</h3>
-                    <h3 class="text-2xl font-bold text-white mb-2">Ingeniería Inversa</h3>
-                    <p class="text-slate-400">Match de IDs ocultos en las URLs de Zara.</p>
+                    <div class="inline-block mb-2 badge badge-logic">
+                        NO es visión artificial
+                    </div>
+                    <h3 class="text-2xl font-bold text-amber-500 mb-1 uppercase tracking-tight">Fase 01</h3>
+                    <h3 class="text-xl font-semibold text-zinc-100 mb-2">Ingeniería Inversa de URLs</h3>
+                    <p class="text-zinc-500 text-sm leading-relaxed">El <span class="text-amber-500 font-bold">SKU del producto</span> está escondido en las propias URLs de Zara.</p>
                 </div>
-                <div
-                    class="z-10 w-12 h-12 rounded-full bg-sky-500 border-4 border-slate-900 flex items-center justify-center text-white font-bold text-xl shadow-[0_0_20px_rgba(56,189,248,0.4)]">
+                <div class="z-10 w-11 h-11 rounded-full bg-amber-500 border-[3px] border-zinc-950 flex items-center justify-center text-zinc-950 font-bold text-lg phase-dot">
                     1
                 </div>
                 <div class="w-full md:w-1/2 md:pl-16 mt-6 md:mt-0">
-                    <div class="step-card p-8 rounded-3xl border-sky-500/30">
-                        <h4 class="text-2xl font-black mb-6 flex items-center gap-3 text-white">
-                            <i class="fas fa-link text-sky-400"></i> Descubrimiento Clave
+                    <div class="glass-card card-amber p-8 rounded-2xl">
+                        <h4 class="text-lg font-bold mb-6 flex items-center gap-3 text-amber-500">
+                            <i class="fas fa-link text-sm"></i> El Descubrimiento Clave
                         </h4>
-
-                        <div class="space-y-6">
-                            <!-- Look Completo -->
-                            <div class="flex items-center gap-4">
-                                <div class="flex-1 url-display p-4 rounded-xl">
-                                    <div class="text-[9px] text-sky-400 uppercase font-bold mb-1">URL BUNDLE (Look)
-                                    </div>
-                                    <div class="text-slate-400 text-[9px] break-all leading-relaxed">
-                                        https://static.zara.net/assets/public/48b8/ae9c/ba474876bc6e/0ae9f71c30a6/<span
-                                            class="highlight-amber text-lg">08200055707</span>-p/08200055707-p.jpg?ts=1753809270573
-                                    </div>
-                                </div>
-                                <div
-                                    class="w-16 h-16 shrink-0 img-placeholder rounded-lg flex flex-col items-center justify-center border-sky-500/50 border-2">
-                                    <i class="fas fa-female text-sky-400 text-xl"></i>
+                        <div class="space-y-4 mb-6">
+                            <div class="url-display p-4 rounded-xl">
+                                <div class="text-[9px] text-amber-500/70 uppercase font-bold mb-1 tracking-wider">URL BUNDLE (look)</div>
+                                <div class="text-zinc-500 text-[9px] break-all leading-relaxed">
+                                    …assets/…/<span class="highlight-amber text-sm">08200055707</span>-p/08200055707-p.jpg?<span class="text-emerald-500 font-bold">ts=1753809270573</span>
                                 </div>
                             </div>
-
-                            <!-- Prenda Suelta -->
-                            <div class="flex items-center gap-4">
-                                <div class="flex-1 url-display p-4 rounded-xl">
-                                    <div class="text-[9px] text-amber-400 uppercase font-bold mb-1">URL PRODUCTO
-                                        (Prenda)</div>
-                                    <div class="text-slate-400 text-[9px] break-all leading-relaxed">
-                                        https://static.zara.net/assets/public/deef/f0cf/8c534bb8a90f/97fb3f37ca72/<span
-                                            class="highlight-amber text-lg">08200055707</span>-e1/08200055707-e1.jpg?ts=1753873636473
-                                    </div>
+                            <div class="flex items-center justify-center">
+                                <div class="text-amber-500/60 text-xs font-bold tracking-widest flex items-center gap-2">
+                                    <i class="fas fa-equals"></i> MISMO SKU <i class="fas fa-equals"></i>
                                 </div>
-                                <div
-                                    class="w-16 h-16 shrink-0 img-placeholder rounded-lg flex flex-col items-center justify-center border-amber-500/50 border-2">
-                                    <i class="fas fa-tshirt text-amber-400 text-xl"></i>
+                            </div>
+                            <div class="url-display p-4 rounded-xl border-l-amber-600">
+                                <div class="text-[9px] text-amber-500/70 uppercase font-bold mb-1 tracking-wider">URL PRODUCTO (prenda)</div>
+                                <div class="text-zinc-500 text-[9px] break-all leading-relaxed">
+                                    …assets/…/<span class="highlight-amber text-sm">08200055707</span>-e1/08200055707-e1.jpg?<span class="text-emerald-500 font-bold">ts=1753873636473</span>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="mt-8 p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-center">
-                            <span class="text-green-400 font-bold">13% de éxito asegurado mediante este patrón.</span>
+                        <div class="stat-block p-3 bg-amber-500/5 border border-amber-500/10 rounded-xl text-center">
+                            <div class="text-2xl font-black text-amber-500">13%</div>
+                            <div class="text-[9px] text-zinc-500 uppercase tracking-widest font-bold">SKU exacto</div>
+                        </div>
+                        <!-- Timestamp callout -->
+                        <div class="mt-5 p-4 bg-teal-500/5 border border-teal-500/15 rounded-xl">
+                            <div class="flex items-center gap-2 mb-3">
+                                <i class="fas fa-clock text-teal-500 text-sm"></i>
+                                <span class="text-teal-500 text-xs font-bold uppercase tracking-widest">Bonus: Timestamp oculto en la URL</span>
+                            </div>
+                            <p class="text-zinc-500 text-xs mb-3 leading-relaxed">
+                                El parámetro <code class="text-teal-400">ts=</code> es la fecha de publicación del artículo. Los looks se fotografían con las prendas de la temporada actual — esto es una señal de oro.
+                            </p>
+                            <div class="grid grid-cols-3 gap-2 text-center">
+                                <div class="bg-zinc-950/60 rounded-lg p-2">
+                                    <div class="text-lg font-black text-teal-500">50%</div>
+                                    <div class="text-[8px] text-zinc-600 uppercase">matches correctos<br>&lt; 7 días</div>
+                                </div>
+                                <div class="bg-zinc-950/60 rounded-lg p-2">
+                                    <div class="text-lg font-black text-teal-400">95%</div>
+                                    <div class="text-[8px] text-zinc-600 uppercase">matches correctos<br>&lt; 90 días</div>
+                                </div>
+                                <div class="bg-zinc-950/60 rounded-lg p-2">
+                                    <div class="text-lg font-black text-rose-500">~4.200</div>
+                                    <div class="text-[8px] text-zinc-600 uppercase">productos penalizados<br>por ser viejos</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- FASE 2: VISIÓN ARTIFICIAL + CUELLO DE BOTELLA -->
-            <div class="relative flex flex-col md:flex-row items-center mb-24 group">
+            <!-- ══════════════════════════════════════════════════ -->
+            <!-- FASE 2: FILTRADO INTELIGENTE -->
+            <!-- ══════════════════════════════════════════════════ -->
+            <div class="relative flex flex-col md:flex-row items-center mb-28 group fade-in fade-in-3">
                 <div class="w-full md:w-1/2 md:pr-16 order-2 md:order-1 mt-6 md:mt-0">
-                    <div
-                        class="step-card p-8 rounded-3xl border-amber-500/20 bg-gradient-to-br from-amber-500/5 to-indigo-500/10">
-                        <h4 class="text-xl font-bold mb-4 flex items-center gap-3 text-amber-400">
-                            <i class="fas fa-microscope animate-pulse-soft"></i> Visión & CLIP Estratégico
+                    <div class="glass-card card-rose p-8 rounded-2xl">
+                        <h4 class="text-lg font-bold mb-4 flex items-center gap-3 text-rose-500">
+                            <i class="fas fa-filter text-sm"></i> Reducción del Espacio de Búsqueda
                         </h4>
-                        <p class="text-slate-300 mb-6 text-sm leading-relaxed">
-                            Detectamos que <strong>YOLOv8x</strong> (DeepFashion2) no identificaba calzado ni
-                            accesorios. Ante esta carencia técnica, implementamos <strong>Zone Crops</strong> y
-                            extracción de características con <strong>CLIP</strong> en áreas críticas.
+                        <p class="text-zinc-400 text-sm mb-5 leading-relaxed">
+                            Antes de buscar nada, eliminamos <strong class="text-zinc-100">53 categorías de ruido</strong>: cosméticos, perfumes, ropa de bebé específica, toallas… que <em>nunca</em> aparecen en el ground truth.
                         </p>
-
-                        <div class="grid grid-cols-2 gap-4 mb-4">
-                            <div class="bg-indigo-500/10 p-3 rounded-xl border border-indigo-500/20 text-center">
-                                <i class="fas fa-hat-cowboy text-indigo-400 mb-1"></i>
-                                <div class="text-[9px] font-black uppercase text-white tracking-widest">Cabeza (0-18%)
-                                </div>
-                                <div class="text-[8px] text-slate-500">CLIP para Gorros/Gafas</div>
+                        <div class="flex items-center gap-4 mb-5">
+                            <div class="text-center">
+                                <div class="text-3xl font-black text-rose-500">27.688</div>
+                                <div class="text-[9px] text-zinc-600 uppercase tracking-widest">productos totales</div>
                             </div>
-                            <div class="bg-indigo-500/10 p-3 rounded-xl border border-indigo-500/20 text-center">
-                                <i class="fas fa-shoe-prints text-indigo-400 mb-1"></i>
-                                <div class="text-[9px] font-black uppercase text-white tracking-widest">Pies (75-100%)
-                                </div>
-                                <div class="text-[8px] text-slate-500">CLIP para Calzado</div>
+                            <div class="flex-1 text-center">
+                                <i class="fas fa-arrow-right text-zinc-700 text-2xl"></i>
+                                <div class="text-[9px] text-rose-500 font-bold mt-1">−1.649 ruido</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-black text-emerald-500">~26.000</div>
+                                <div class="text-[9px] text-zinc-600 uppercase tracking-widest">espacio real</div>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check-circle text-emerald-500 text-xs"></i>
+                                <span class="text-zinc-400 text-xs">Restricciones de <strong class="text-zinc-200">sección</strong>: cada categoría solo aparece en secciones concretas del catálogo</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check-circle text-emerald-500 text-xs"></i>
+                                <span class="text-zinc-400 text-xs"><strong class="text-zinc-200">Diversity enforcement</strong>: el top-15 siempre incluye TOPS + BOTTOMS + ZAPATOS</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div
-                    class="z-10 w-12 h-12 rounded-full bg-amber-500 border-4 border-slate-900 flex items-center justify-center text-white font-bold text-xl order-1 md:order-2 shadow-[0_0_20px_rgba(245,158,11,0.4)]">
+                <div class="z-10 w-11 h-11 rounded-full bg-rose-500 border-[3px] border-zinc-950 flex items-center justify-center text-zinc-950 font-bold text-lg order-1 md:order-2 phase-dot">
                     2
                 </div>
                 <div class="hidden md:block w-1/2 pl-16">
-                    <h3 class="text-3xl font-bold text-amber-500 mb-2 italic uppercase tracking-tighter">Fase 02</h3>
-                    <h3 class="text-2xl font-bold text-white mb-2">Punto Ciego Técnico</h3>
-                    <p class="text-slate-400">Integrando CLIP para compensar limitaciones de YOLO.</p>
+                    <div class="inline-block mb-2 badge badge-logic">
+                        NO es visión artificial
+                    </div>
+                    <h3 class="text-2xl font-bold text-rose-500 mb-1 uppercase tracking-tight">Fase 02</h3>
+                    <h3 class="text-xl font-semibold text-zinc-100 mb-2">Filtrado Inteligente</h3>
+                    <p class="text-zinc-500 text-sm leading-relaxed">Análisis estadístico del ground truth para eliminar categorías imposibles.</p>
                 </div>
             </div>
 
-            <!-- FASE 3: EFICIENCIA KAGGLE -->
-            <div class="relative flex flex-col md:flex-row items-center mb-24 group">
+            <!-- ══════════════════════════════════════════════════ -->
+            <!-- FASE 3: VISIÓN ARTIFICIAL (RÁPIDO) -->
+            <!-- ══════════════════════════════════════════════════ -->
+            <div class="relative flex flex-col md:flex-row items-center mb-28 group fade-in fade-in-4">
                 <div class="hidden md:block w-1/2 pr-16 text-right">
-                    <h3 class="text-3xl font-bold text-indigo-400 mb-2 italic uppercase tracking-tighter">Fase 03</h3>
-                    <h3 class="text-2xl font-bold text-white mb-2">Salto a la Nube</h3>
-                    <p class="text-slate-400">Eficiencia radical mediante Kaggle GPUs.</p>
+                    <div class="inline-block mb-2 badge badge-vision">
+                        Visión artificial
+                    </div>
+                    <h3 class="text-2xl font-bold text-teal-500 mb-1 uppercase tracking-tight">Fase 03</h3>
+                    <h3 class="text-xl font-semibold text-zinc-100 mb-2">Base Visual</h3>
+                    <p class="text-zinc-500 text-sm leading-relaxed">CLIP + YOLO como punto de partida, no como fin.</p>
                 </div>
-                <div
-                    class="z-10 w-12 h-12 rounded-full bg-indigo-500 border-4 border-slate-900 flex items-center justify-center text-white font-bold text-xl shadow-[0_0_20px_rgba(129,140,248,0.4)]">
+                <div class="z-10 w-11 h-11 rounded-full bg-teal-500 border-[3px] border-zinc-950 flex items-center justify-center text-zinc-950 font-bold text-lg phase-dot">
                     3
                 </div>
                 <div class="w-full md:w-1/2 md:pl-16 mt-6 md:mt-0">
-                    <div class="step-card p-8 rounded-3xl border-indigo-500/20 bg-indigo-500/5">
-                        <h4 class="text-xl font-bold mb-4 flex items-center gap-3 text-indigo-400">
-                            <i class="fas fa-bolt"></i> Optimización de Tiempos
+                    <div class="glass-card card-teal p-8 rounded-2xl">
+                        <h4 class="text-lg font-bold mb-5 flex items-center gap-3 text-teal-500">
+                            <i class="fas fa-eye text-sm"></i> CLIP ViT-L-14 + YOLOv8
                         </h4>
-                        <div
-                            class="flex items-center justify-between gap-4 p-4 bg-black/40 rounded-2xl border border-indigo-500/10">
-                            <div class="text-center">
-                                <span class="text-[10px] text-slate-500 uppercase font-bold">Local</span>
-                                <div class="text-slate-400 font-black text-xl line-through decoration-red-500/50">~7.5
-                                    Horas</div>
+                        <div class="space-y-3 text-sm text-zinc-400 mb-5">
+                            <div class="flex gap-3 items-start">
+                                <i class="fas fa-dot-circle text-teal-500 mt-1 text-xs"></i>
+                                <span><strong class="text-zinc-100">YOLO</strong> detecta prendas individuales → recortes por prenda</span>
                             </div>
-                            <i class="fas fa-arrow-right text-indigo-400 text-2xl"></i>
-                            <div class="text-center">
-                                <span class="text-[10px] text-indigo-400 uppercase font-bold">Kaggle</span>
-                                <div class="text-white font-black text-3xl italic">30 Minutos</div>
+                            <div class="flex gap-3 items-start">
+                                <i class="fas fa-dot-circle text-teal-500 mt-1 text-xs"></i>
+                                <span><strong class="text-zinc-100">Zone crops</strong> fijos para zapatos (75-100%) y gorros (0-18%)</span>
+                            </div>
+                            <div class="flex gap-3 items-start">
+                                <i class="fas fa-dot-circle text-teal-500 mt-1 text-xs"></i>
+                                <span><strong class="text-zinc-100">CLIP</strong> convierte cada recorte en un vector de 768 dimensiones</span>
+                            </div>
+                            <div class="flex gap-3 items-start">
+                                <i class="fas fa-dot-circle text-teal-500 mt-1 text-xs"></i>
+                                <span><strong class="text-zinc-100">Projection Head</strong> (MLP entrenado con InfoNCE loss) afina el matching</span>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- FASE 4: ANÁLISIS DE RESULTADOS -->
-            <div class="relative flex flex-col md:flex-row items-center mb-24 group">
-                <div class="w-full md:w-1/2 md:pr-16 order-2 md:order-1 mt-6 md:mt-0 text-left md:text-right">
-                    <div class="step-card p-8 rounded-3xl border-emerald-500/30">
-                        <h4
-                            class="text-xl font-bold mb-4 flex items-center gap-3 text-emerald-400 justify-start md:justify-end">
-                            <i class="fas fa-exclamation-triangle"></i> Desequilibrio en Predicciones
-                        </h4>
-                        <p class="text-slate-300 italic text-sm mb-4 leading-relaxed">
-                            "Vimos bundles que soltaban <span class="text-emerald-400 font-bold">14 camisas y solo 1
-                                pantalón</span>."
-                        </p>
-                        <div class="bg-black/40 p-4 rounded-xl border border-emerald-500/10">
-                            <p class="text-slate-400 text-xs text-left">
-                                Debido a la falta de tiempo para re-entrenar, aplicamos un <strong>Filtro de Top-40
-                                    Candidatos</strong> para asegurar la coherencia del Look final.
+                        <div class="p-3 bg-zinc-950/60 rounded-xl border border-zinc-800/50">
+                            <p class="text-zinc-500 text-xs text-center">
+                                La visión genera <span class="text-teal-400 font-bold">candidatos</span> — las señales no-visuales deciden <span class="text-amber-500 font-bold">quién gana</span>.
                             </p>
                         </div>
                     </div>
                 </div>
-                <div
-                    class="z-10 w-12 h-12 rounded-full bg-emerald-500 border-4 border-slate-900 flex items-center justify-center text-white font-bold text-xl order-1 md:order-2 shadow-[0_0_20px_rgba(16,185,129,0.4)]">
+            </div>
+
+            <!-- ══════════════════════════════════════════════════ -->
+            <!-- FASE 4: CO-OCURRENCIA Y COMPORTAMIENTO -->
+            <!-- ══════════════════════════════════════════════════ -->
+            <div class="relative flex flex-col md:flex-row items-center mb-28 group fade-in fade-in-5">
+                <div class="hidden md:block w-1/2 pr-16 text-right">
+                    <div class="inline-block mb-2 badge badge-logic">
+                        NO es visión artificial
+                    </div>
+                    <h3 class="text-2xl font-bold text-emerald-500 mb-1 uppercase tracking-tight">Fase 04</h3>
+                    <h3 class="text-xl font-semibold text-zinc-100 mb-2">Patrones de Co-ocurrencia</h3>
+                    <p class="text-zinc-500 text-sm leading-relaxed">¿Qué prendas suelen aparecer juntas en un look?</p>
+                </div>
+                <div class="z-10 w-11 h-11 rounded-full bg-emerald-500 border-[3px] border-zinc-950 flex items-center justify-center text-zinc-950 font-bold text-lg phase-dot">
                     4
                 </div>
-                <div class="hidden md:block w-1/2 pl-16">
-                    <h3 class="text-3xl font-bold text-emerald-400 mb-2 italic uppercase tracking-tighter">Fase 04</h3>
-                    <h3 class="text-2xl font-bold text-white mb-2">Análisis de Resultados</h3>
-                    <p class="text-slate-400">Limitar candidatos para ganar precisión.</p>
+                <div class="w-full md:w-1/2 md:pl-16 mt-6 md:mt-0">
+                    <div class="glass-card card-emerald p-8 rounded-2xl">
+                        <h4 class="text-lg font-bold mb-5 flex items-center gap-3 text-emerald-500">
+                            <i class="fas fa-project-diagram text-sm"></i> Grafos de Co-ocurrencia
+                        </h4>
+                        <p class="text-zinc-400 text-sm mb-5 leading-relaxed">
+                            Analizamos todos los looks del training para construir un grafo de <strong class="text-zinc-100">qué productos aparecen juntos</strong>. Si ya confirmamos que un bundle lleva una chaqueta concreta, los pantalones que habitualmente se combinan con ella suben en el ranking.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-center text-xs">
+                            <div class="p-3 bg-emerald-500/5 border border-emerald-500/10 rounded-xl">
+                                <i class="fas fa-tshirt text-emerald-500 text-lg mb-1"></i>
+                                <div class="text-zinc-100 font-bold">Camisa X</div>
+                                <div class="text-emerald-500 text-[9px]">confirmada</div>
+                            </div>
+                            <div class="flex items-center justify-center py-2 md:py-0">
+                                <div class="text-center">
+                                    <i class="fas fa-arrow-right text-zinc-700 md:block hidden"></i>
+                                    <i class="fas fa-arrow-down text-zinc-700 md:hidden"></i>
+                                    <div class="text-[8px] text-emerald-500 font-bold mt-1">co-ocurre</div>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-zinc-950/60 border border-zinc-800/50 rounded-xl">
+                                <i class="fas fa-socks text-zinc-500 text-lg mb-1"></i>
+                                <div class="text-zinc-100 font-bold">Pantalón Y</div>
+                                <div class="text-zinc-600 text-[9px]">sube en ranking</div>
+                            </div>
+                        </div>
+                        <div class="mt-4 p-3 bg-zinc-950/60 rounded-xl text-center border border-zinc-800/30">
+                            <span class="text-zinc-500 text-xs">Especialmente útil para accesorios que son <span class="text-emerald-500 font-bold">invisibles</span> en la imagen (bolsos, cinturones ocultos)</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- FASE 5: APRENDIZAJE ACTIVO -->
-            <div class="relative flex flex-col md:flex-row items-center mb-16 group">
-                <div class="hidden md:block w-1/2 pr-16 text-right">
-                    <h3 class="text-3xl font-bold text-pink-500 mb-2 italic uppercase tracking-tighter">Fase 05</h3>
-                    <h3 class="text-2xl font-bold text-white mb-2">Human-in-the-Loop</h3>
-                    <p class="text-slate-400">Afinando mediante corrección humana.</p>
+            <!-- ══════════════════════════════════════════════════ -->
+            <!-- FASE 5: HUMAN-IN-THE-LOOP -->
+            <!-- ══════════════════════════════════════════════════ -->
+            <div class="relative flex flex-col md:flex-row items-center mb-16 group fade-in fade-in-6">
+                <div class="w-full md:w-1/2 md:pr-16 order-2 md:order-1 mt-6 md:mt-0">
+                    <div class="glass-card card-fuchsia p-8 rounded-2xl">
+                        <h4 class="text-lg font-bold mb-5 flex items-center gap-3 text-fuchsia-500">
+                            <i class="fas fa-user-check text-sm"></i> Herramienta de Anotación Propia
+                        </h4>
+                        <p class="text-zinc-400 text-sm mb-5 leading-relaxed">
+                            Construimos una <strong class="text-zinc-100">app web completa</strong> (<code class="text-fuchsia-400">server.py + index.html</code>) para anotar manualmente bundles de test. El anotador ve la imagen del look y marca qué productos del catálogo están presentes.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-center mb-5">
+                            <div class="bg-zinc-950/60 p-3 rounded-lg border border-zinc-800/50">
+                                <div class="text-zinc-100 font-black text-2xl">120</div>
+                                <div class="text-[8px] text-zinc-600 uppercase tracking-widest font-bold">Bundles anotados</div>
+                            </div>
+                            <div class="bg-zinc-950/60 p-3 rounded-lg border border-zinc-800/50">
+                                <div class="text-zinc-100 font-black text-2xl">500</div>
+                                <div class="text-[8px] text-zinc-600 uppercase tracking-widest font-bold">Peso máximo</div>
+                            </div>
+                            <div class="bg-zinc-950/60 p-3 rounded-lg border border-zinc-800/50">
+                                <div class="text-zinc-100 font-black text-2xl">×0.1</div>
+                                <div class="text-[8px] text-zinc-600 uppercase tracking-widest font-bold">Penalización negativo</div>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-xs text-zinc-500">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-plus-circle text-emerald-500"></i>
+                                <span>Productos confirmados → <strong class="text-emerald-500">puntuación 500</strong> (señal más fuerte del sistema)</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-times-circle text-rose-500"></i>
+                                <span>Productos rechazados → puntuación multiplicada por <strong class="text-rose-500">0.1</strong></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div
-                    class="z-10 w-12 h-12 rounded-full bg-pink-500 border-4 border-slate-900 flex items-center justify-center text-white font-bold text-xl shadow-[0_0_20px_rgba(236,72,153,0.4)]">
+                <div class="z-10 w-11 h-11 rounded-full bg-fuchsia-500 border-[3px] border-zinc-950 flex items-center justify-center text-zinc-950 font-bold text-lg order-1 md:order-2 phase-dot">
                     5
                 </div>
-                <div class="w-full md:w-1/2 md:pl-16 mt-6 md:mt-0">
-                    <div
-                        class="step-card p-8 rounded-3xl bg-gradient-to-br from-pink-500/10 to-indigo-500/10 border-pink-500/30">
-                        <h4 class="text-xl font-bold mb-4 flex items-center gap-3 text-pink-400">
-                            <i class="fas fa-user-check"></i> Refinamiento Colaborativo
-                        </h4>
-                        <div class="grid grid-cols-2 gap-4 text-center">
-                            <div class="bg-black/40 p-3 rounded-lg border border-pink-500/10">
-                                <div class="text-white font-black text-xl">120</div>
-                                <div class="text-[8px] text-slate-500 uppercase tracking-widest font-bold">Bundles</div>
-                            </div>
-                            <div class="bg-black/40 p-3 rounded-lg border border-pink-500/10">
-                                <div class="text-white font-black text-xl">234</div>
-                                <div class="text-[8px] text-slate-500 uppercase tracking-widest font-bold">Pares OK
-                                </div>
-                            </div>
+                <div class="hidden md:block w-1/2 pl-16">
+                    <div class="inline-block mb-2 badge badge-logic">
+                        NO es visión artificial
+                    </div>
+                    <h3 class="text-2xl font-bold text-fuchsia-500 mb-1 uppercase tracking-tight">Fase 05</h3>
+                    <h3 class="text-xl font-semibold text-zinc-100 mb-2">Human-in-the-Loop</h3>
+                    <p class="text-zinc-500 text-sm leading-relaxed">Anotaciones manuales con herramienta propia. La señal más fiable del sistema.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════ -->
+        <!-- RESULTADO FINAL -->
+        <!-- ══════════════════════════════════════════════════ -->
+        <div class="mt-16 mb-24 fade-in fade-in-6">
+            <div class="glass-card card-amber p-10 rounded-2xl border-amber-500/15">
+                <div class="flex flex-col md:flex-row md:items-center gap-10">
+                    <!-- Big number — left -->
+                    <div class="md:w-1/2">
+                        <p class="text-zinc-600 text-xs uppercase tracking-widest font-bold mb-3">Resultado final</p>
+                        <div class="text-7xl md:text-8xl font-black text-amber-500 leading-none">45.01%</div>
+                    </div>
+                    <!-- Stats — right, stacked with dividers -->
+                    <div class="md:w-1/2 divide-y divide-zinc-800/60">
+                        <div class="flex items-center gap-4 py-4">
+                            <div class="text-2xl font-black text-amber-500 w-24 text-right">~13%</div>
+                            <div class="text-[11px] text-zinc-500 uppercase tracking-wider leading-tight">de los aciertos vienen<br>solo de las URLs</div>
+                        </div>
+                        <div class="flex items-center gap-4 py-4">
+                            <div class="text-2xl font-black text-fuchsia-500 w-24 text-right">120</div>
+                            <div class="text-[11px] text-zinc-500 uppercase tracking-wider leading-tight">bundles mejorados<br>con anotación humana</div>
+                        </div>
+                        <div class="flex items-center gap-4 py-4">
+                            <div class="text-2xl font-black text-teal-500 w-24 text-right">27K→26K</div>
+                            <div class="text-[11px] text-zinc-500 uppercase tracking-wider leading-tight">productos filtrados<br>por análisis estadístico</div>
                         </div>
                     </div>
                 </div>
@@ -292,15 +478,9 @@
         </div>
 
         <!-- Pie de página -->
-        <footer class="mt-32 pt-12 border-t border-slate-800/50 text-center">
-            <div
-                class="flex justify-center gap-10 mb-8 grayscale opacity-50 hover:grayscale-0 transition-all duration-500">
-                <i class="fab fa-python text-5xl"></i>
-                <i class="fas fa-brain text-5xl"></i>
-                <i class="fas fa-cloud text-5xl text-sky-400"></i>
-            </div>
-            <p class="text-slate-600 text-[10px] font-black tracking-[0.4em] uppercase italic">
-                InditexTech Hackathon 2026 • Case Study Final
+        <footer class="pt-12 border-t border-zinc-800/30 text-center">
+            <p class="text-zinc-700 text-[10px] font-bold tracking-[0.4em] uppercase">
+                HackUDC · InditexTech 2026 • Los Pingüinos
             </p>
         </footer>
     </div>
