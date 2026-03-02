@@ -232,7 +232,7 @@ Proyecto desarrollado durante **HackUDC 2026** (Hackathon Universidad de A Coru�
 Miembros/GitHub:
 
     - Jorge García Varela / jorgegarcia33
-    - Sergio Rego Criado / sergiorego29
+    - Sergio Rego Criado / sergiorego29 / srego92
     - David Diz Oubiña / daviddizou
 
 ---
